@@ -9,7 +9,7 @@
             </el-radio-button>
             <el-radio-button :label="true">
                 <svg-icon v-if="isCollapse" icon-class="openleft"></svg-icon>
-                收起
+                收起这是测试
             </el-radio-button>
         </el-radio-group>
         <span slot="title" style="font-size: 15px;float: right;margin-right: 10px">

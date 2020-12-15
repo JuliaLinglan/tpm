@@ -1,0 +1,84 @@
+/**
+* I think element-ui's default theme color is too light for long-term use.
+* So I modified the default color and you can modify it to your liking.
+**/
+
+/* theme color */
+//$--color-primary: #1890ff;
+$--color-primary: #38ABFE;
+//$--color-primary: #004e7e;
+$--color-success: #13ce66;
+$--color-warning: #FFBA00;
+$--color-danger: #ff4949;
+// $--color-info: #1E1E1E;
+
+$--button-font-weight: 400;
+
+// $--color-text-regular: #1f2d3d;
+
+$--border-color-light: #dfe4ed;
+$--border-color-lighter: #e6ebf5;
+
+$--table-border:1px solid#dfe6ec;
+
+/* icon font path, required */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+@import "~element-ui/packages/theme-chalk/src/index";
+
+
+$menuText:#868788;
+$menuActiveText:#38ABFE;
+$subMenuActiveText:#868788; // 子菜单选择后，主菜单的颜色https://github.com/ElemeFE/element/issues/12951
+// $subMenuActiveText:red;
+$menuBg:#ffffff;
+$menuHover:rgba(32,160,255,0.25);
+
+//$subMenuBg:#1f2d3d;
+$subMenuBg:#ffffff;
+$subMenuHover:rgba(32,160,255,0.25);
+
+//左侧菜单选中时颜色
+.el-menu-item.is-active {
+  background-color: #1726B1 !important;
+}
+
+//左侧菜单hover时颜色
+.el-menu-item:hover {
+  background-color: #2431C3 !important;
+}
+
+// the :export directive is the magic sauce for webpack
+// https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
+:export {
+  theme: $--color-primary;
+}
+
+// input字体变动
+.el-input.is-disabled .el-input__inner {
+  background-color: #F5F7FA;
+  border-color: #dfe4ed;
+  color: #000000;
+  cursor: not-allowed;
+}
+
+//checkbox边框变动
+.el-checkbox .el-checkbox__input .el-checkbox__inner {
+  border: 1px solid #656870;
+}
+
+//table表头不对齐变动
+.el-table th.gutter {
+    display: table-cell !important;
+}
+.el-table colgroup.gutter {
+    display: table-cell !important;
+}
+
+.el-table th{
+  background-color:rgba(250,250,250,1) !important;
+  font-size:14px;
+  font-family:PingFangSC-Medium,PingFangSC;
+  font-weight:500;
+  color:rgba(0,0,0,0.85);
+}

@@ -7,7 +7,7 @@
             <div class="panel-content">
                 <el-form :inline="true" label-width="100px" style="margin-top: 5px;" size="small">
                     <el-form-item>
-                        <el-button type="primary" size="medium">添加</el-button>
+                        <el-button type="primary" size="medium">添加中</el-button>
                     </el-form-item>
                 </el-form>
 

@@ -3,7 +3,8 @@
         <div class="panel-box">
             <div class="panel-title">部门设置
                 <el-input style="flex-grow: 0; flex-basis: 200px;" size="medium"></el-input>
-                <el-button style="flex-grow: 0" size="medium">搜索</el-button></div>
+                <el-button style="flex-grow: 0" size="medium">搜索</el-button>
+            </div>
             <div class="panel-content">
                 <el-form :inline="true" label-width="100px" style="margin-top: 5px;" size="small">
                     <el-form-item>
@@ -51,72 +52,72 @@
                         style="float:right;"
                     ></el-pagination>
                 </div>
-<!--                <el-table-->
-<!--                    :data="dataList"-->
-<!--                    empty-text="没有部门"-->
-<!--                    class="tt-table"-->
-<!--                    v-loading="loading">-->
-<!--                    <el-table-column-->
-<!--                        prop="dpID"-->
-<!--                        label="id"-->
-<!--                        width="50"-->
-<!--                        style="text-align: center;">-->
-<!--                    </el-table-column>-->
-<!--                    <el-table-column-->
-<!--                        prop="dpNo"-->
-<!--                        label="部门编号"-->
-<!--                        width="100">-->
-<!--                    </el-table-column>-->
-<!--                    <el-table-column-->
-<!--                        prop="dpName"-->
-<!--                        label="部门名称"-->
-<!--                        width="150">-->
-<!--                    </el-table-column>-->
-<!--                    <el-table-column-->
-<!--                        prop="dpType"-->
-<!--                        label="部门类型"-->
-<!--                        width="100">-->
-<!--                    </el-table-column>-->
-<!--                    <el-table-column-->
-<!--                        prop="dpFatherID"-->
-<!--                        label="上级部门编号"-->
-<!--                        width="140">-->
-<!--                    </el-table-column>-->
-<!--                    <el-table-column-->
-<!--                        prop="dpLevelIndex"-->
-<!--                        label="部门层级代码"-->
-<!--                        width="140">-->
-<!--                    </el-table-column>-->
-<!--                    <el-table-column-->
-<!--                        prop="siteID"-->
-<!--                        label="部门所属单位机构编号"-->
-<!--                        width="200">-->
-<!--                    </el-table-column>-->
-<!--                    <el-table-column-->
-<!--                        prop="dpNote"-->
-<!--                        label="部门工作说明"-->
-<!--                        width="120">-->
-<!--                    </el-table-column>-->
-<!--                    <el-table-column-->
-<!--                        width="150px"-->
-<!--                        label="操作">-->
-<!--                        <template slot-scope="scope">-->
-<!--                            <template>-->
-<!--                                <el-button-->
+                <!--                <el-table-->
+                <!--                    :data="dataList"-->
+                <!--                    empty-text="没有部门"-->
+                <!--                    class="tt-table"-->
+                <!--                    v-loading="loading">-->
+                <!--                    <el-table-column-->
+                <!--                        prop="dpID"-->
+                <!--                        label="id"-->
+                <!--                        width="50"-->
+                <!--                        style="text-align: center;">-->
+                <!--                    </el-table-column>-->
+                <!--                    <el-table-column-->
+                <!--                        prop="dpNo"-->
+                <!--                        label="部门编号"-->
+                <!--                        width="100">-->
+                <!--                    </el-table-column>-->
+                <!--                    <el-table-column-->
+                <!--                        prop="dpName"-->
+                <!--                        label="部门名称"-->
+                <!--                        width="150">-->
+                <!--                    </el-table-column>-->
+                <!--                    <el-table-column-->
+                <!--                        prop="dpType"-->
+                <!--                        label="部门类型"-->
+                <!--                        width="100">-->
+                <!--                    </el-table-column>-->
+                <!--                    <el-table-column-->
+                <!--                        prop="dpFatherID"-->
+                <!--                        label="上级部门编号"-->
+                <!--                        width="140">-->
+                <!--                    </el-table-column>-->
+                <!--                    <el-table-column-->
+                <!--                        prop="dpLevelIndex"-->
+                <!--                        label="部门层级代码"-->
+                <!--                        width="140">-->
+                <!--                    </el-table-column>-->
+                <!--                    <el-table-column-->
+                <!--                        prop="siteID"-->
+                <!--                        label="部门所属单位机构编号"-->
+                <!--                        width="200">-->
+                <!--                    </el-table-column>-->
+                <!--                    <el-table-column-->
+                <!--                        prop="dpNote"-->
+                <!--                        label="部门工作说明"-->
+                <!--                        width="120">-->
+                <!--                    </el-table-column>-->
+                <!--                    <el-table-column-->
+                <!--                        width="150px"-->
+                <!--                        label="操作">-->
+                <!--                        <template slot-scope="scope">-->
+                <!--                            <template>-->
+                <!--                                <el-button-->
 
-<!--                                    type="text"-->
-<!--                                >Edit-->
-<!--                                </el-button>-->
-<!--                                <el-button-->
-<!--                                    type="text"-->
+                <!--                                    type="text"-->
+                <!--                                >Edit-->
+                <!--                                </el-button>-->
+                <!--                                <el-button-->
+                <!--                                    type="text"-->
 
-<!--                                >Delete-->
-<!--                                </el-button>-->
+                <!--                                >Delete-->
+                <!--                                </el-button>-->
 
-<!--                            </template>-->
-<!--                        </template>-->
-<!--                    </el-table-column>-->
-<!--                </el-table>-->
+                <!--                            </template>-->
+                <!--                        </template>-->
+                <!--                    </el-table-column>-->
+                <!--                </el-table>-->
             </div>
         </div>
     </div>
@@ -124,7 +125,6 @@
 </template>
 
 <script>
-import {departmentInfos} from '../../../api/api'
 import {mapGetters} from 'vuex'
 
 export default {
@@ -134,8 +134,8 @@ export default {
         return {
             dataList: [],
             loading: false,
-            pageIndex: 2,
-            pageSize: 20,
+            pageIndex: 0,
+            pageSize: 5,
             total: 0,
         }
     },
@@ -155,13 +155,36 @@ export default {
             this.getUser();
         },
         getUser() {
-            this.loading = true
-            departmentInfos().then(res => {
-                this.dataList = res.data.result
-                this.loading = false
-            }).catch((err) => {
-                this.loading = false
-            })
+            // this.loading = true
+            //
+            // departmentInfos({pageIndex: this.pageIndex, pageSize: this.pageSize}).then(res => {
+            //     this.dataList = res.data.result
+            //     this.loading = false
+            // }).catch((err) => {
+            //     this.loading = false
+            // })
+
+            // let postData = {
+            //     "id": 0,
+            //     "mD_Name": "MDName",
+            //     "mD_IP": "MDIP",
+            //     "mD_Type": 1,
+            //     "mD_UpdateTime": 1,
+            //     "mD_ShowMode": 1,
+            //     "mD_VideoUrl": "MDVideoUrl",
+            //     "mD_Flup_Time": 1,
+            //     "mD_Scroll_Txt": "MDScrollTxt",
+            //     "mD_Scroll_Time": 1,
+            //     "dialogEnable": 1,
+            //     "mD_Dialog_Time": 1,
+            //     "mD_Queue_View": "MDQueueView"
+            // }
+            //
+            // addDepartment(postData).then(res => {
+            //
+            // })
+
+
         },
     },
 }

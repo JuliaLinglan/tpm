@@ -9,6 +9,13 @@ import locale from 'element-ui/lib/locale/lang/zh-CN'
 import './styles/element-variables.scss'
 import '@/styles/index.scss' // global css
 Vue.use(ElementUI, {locale})
+import "@/directives/el-drag/elDailogDrag";
+import dict from "@/common/dict";
+import InputNumber from "./components/InputNumber"
+Vue.use(InputNumber);
+import errMsg from "./common/errMessage"
+Vue.use(errMsg)
+
 
 import './permission' // permission control
 import store from './store/index'

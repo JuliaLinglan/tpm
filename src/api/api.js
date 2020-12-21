@@ -8,10 +8,19 @@ export function login(data) {
     })
 }
 
-export function departmentInfos() {
+export function departmentInfos(params) {
     return request({
-        url: '/ser/weather/weather',
+        url: '/ser/maindisplay/maindisplay',
         method: 'get',
+        params: params
+    })
+}
+
+export function addDepartment(data) {
+    return request({
+        url: '/ser/maindisplay/AddMainDisplay',
+        method: 'post',
+        data: data,
     })
 }
 

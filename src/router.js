@@ -96,8 +96,14 @@ export const asyncRoutes = [
             {
                 path: 'servicekey',
                 name: 'servicekey',
-                meta: {title: '服务码'},
+                meta: {title: '服务键'},
                 component: () => import('./views/setting/servicekey/index.vue'),
+            },
+            {
+                path: 'reception',
+                name: 'reception',
+                meta: {title: '服务台'},
+                component: () => import('./views/setting/reception/index.vue'),
             },
         ]
     },

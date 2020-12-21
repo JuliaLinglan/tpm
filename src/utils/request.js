@@ -31,7 +31,7 @@ service.interceptors.response.use(
         return response
     },
     error => {
-        console.log('err: ', error) // for debug
+        // console.log('err: ', error) // for debug
         let status = error.response.status
         if (status === 401) {
             alert("登录超时，请重新登录")
@@ -39,9 +39,9 @@ service.interceptors.response.use(
             store.dispatch('user/Logout').then(res => {
                 next(`/`)
             })
-            return Promise.reject(error);
+            return Promise.reject(error.response.data);
         } else {
-            return Promise.reject(error);
+            return Promise.reject(error.response.data);
         }
     }
 )

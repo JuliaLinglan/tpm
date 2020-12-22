@@ -76,8 +76,8 @@ export const asyncRoutes = [
                 component: () => import('./views/setting/staff/index.vue'),
             },
             {
-                path: 'servicecategory', name: 'servicecategory', meta: {title: '服务'},
-                component: () => import('./views/setting/servicecategory/index.vue'),
+                path: 'srvgroup', name: 'srvgroup', meta: {title: '服务类别'},
+                component: () => import('./views/setting/srvgroup/index.vue'),
             },
             {
                 path: 'workstation', name: 'workstation', meta: {title: '工作站'},

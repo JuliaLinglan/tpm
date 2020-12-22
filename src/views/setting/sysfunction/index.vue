@@ -13,14 +13,18 @@
                 </el-form>
 
                 <el-table
-                        class="tt-table"
-                        empty-text="没有数据"
-                        header-cell-class-name="table_header_style"
-                        :data="dataList">
+                    class="tt-table"
+                    empty-text="没有数据"
+                    header-cell-class-name="table_header_style"
+                    :data="dataList">
                     <el-table-column prop="set_name" label="功能名称"></el-table-column>
                     <el-table-column prop="set_para" label="字符串参数值"></el-table-column>
                     <el-table-column prop="set_value" label="数值参数值"></el-table-column>
-                    <el-table-column prop="set_enable" label="是否启用"></el-table-column>
+                    <el-table-column prop="set_enable" label="是否启用">
+                        <template slot-scope="scope">
+                            {{scope.row.set_enable === true ? "是" : "否"}}
+                        </template>
+                    </el-table-column>
                     <el-table-column prop="set_note" label="描述" :show-overflow-tooltip="true"></el-table-column>
                     <el-table-column width="150px" label="操作">
                         <template slot-scope="scope">
@@ -42,12 +46,10 @@
             </div>
 
             <el-dialog v-dialogDrag :title="dialogFormTitle" :close-on-click-modal="false"
-                       :visible.sync="showAddDialog" append-to-body>
+                       :visible.sync="showAddDialog" append-to-body width="400px">
                 <div class="dialog-content">
                     <el-form :rules="rules" :model="dataForm" ref="form" size="medium" style="width:96%;"
-                             label-width="140px">
-                        <!--                        <el-row>-->
-                        <!--                            <el-col :span="8">-->
+                             label-width="120px">
                         <el-form-item label="功能名称：" prop="set_name">
                             <el-input v-model="dataForm.set_name"></el-input>
                         </el-form-item>
@@ -55,22 +57,19 @@
                             <el-input v-model="dataForm.set_para"></el-input>
                         </el-form-item>
                         <el-form-item label="数值参数值：" prop="set_value">
-                            <el-input v-model="dataForm.set_value"></el-input>
+                            <InputNumber v-model.number="dataForm.set_value" :min="0"></InputNumber>
                         </el-form-item>
                         <el-form-item label="是否启用：" prop="set_enable">
                             <el-select placeholder="请选择" v-model="dataForm.set_enable">
-                                <el-option label="是" value="true"></el-option>
-                                <el-option label="否" value="false"></el-option>
+                                <el-option label="是" :value=true></el-option>
+                                <el-option label="否" :value=false></el-option>
                             </el-select>
                         </el-form-item>
-                        <!--                            </el-col>-->
-                        <!--                            <el-col :span="24">-->
+
                         <el-form-item label="描述：" prop="set_note" class="textarea">
                             <el-input type="textarea" placeholder="请输入文字，最多为100个字。"
                                       v-model="dataForm.set_note"></el-input>
                         </el-form-item>
-                        <!--                            </el-col>-->
-                        <!--                        </el-row>-->
                     </el-form>
                     <div style="text-align: right">
                         <el-button size="medium" @click="handleBack">取消</el-button>
@@ -179,7 +178,6 @@ export default {
                 this.btnLoading = true
                 let postData = {};
                 Object.assign(postData, this.dataForm);
-                postData.dialogenable = postData.md_dialog_enable === true ? "1" : "0"
                 if (postData.id === 0) {
                     addSysFunction(postData, this.pageIndex - 1, this.pageSize)
                         .then((res) => {
@@ -218,13 +216,13 @@ export default {
 </script>
 
 <style lang="scss">
-    .el-tooltip__popper {
-        max-width: 300px;
-        padding: 16px;
-        background: #fff !important;
-        color: #666 !important;
-        box-shadow: 1px 1px 5px 1px #D3D3D6;
-    }
+.el-tooltip__popper {
+    max-width: 300px;
+    padding: 16px;
+    background: #fff !important;
+    color: #666 !important;
+    box-shadow: 1px 1px 5px 1px #D3D3D6;
+}
 </style>
 <!--public int ID { get; set; }-->
 <!--public string Set_Name { get; set; }-->

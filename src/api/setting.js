@@ -97,4 +97,69 @@ export function deleteSysFunction(data, pageIndex, pageSize) {
         data: data
     })
 }
+/**
+ * 服务类别设置
+ * @param params
+ * @returns {AxiosPromise}
+ */
+export function getSrvGroupList(params) {
+    return request({url: '/ser/srvgroup/list', method: 'get', params: params})
+}
+
+export function addSrvGroup(data, pageIndex, pageSize) {
+    return request({
+        url: '/ser/srvgroup/add?pageIndex=' + pageIndex + "&pageSize=" + pageSize,
+        method: 'post',
+        data: data
+    })
+}
+
+export function updateSrvGroup(data, pageIndex, pageSize) {
+    return request({
+        url: '/ser/srvgroup/update?pageIndex=' + pageIndex + "&pageSize=" + pageSize,
+        method: 'post',
+        data: data
+    })
+}
+
+export function deleteSrvGroup(data, pageIndex, pageSize) {
+    return request({
+        url: '/ser/srvgroup/delete?pageIndex=' + pageIndex + "&pageSize=" + pageSize,
+        method: 'post',
+        data: data
+    })
+}
+
+/**
+ * 员工设置
+ * @param params
+ * @returns {AxiosPromise}
+ */
+export function getStaffList(params) {
+    return request({url: '/ser/staffinfo/list', method: 'get', params: params})
+}
+
+export function addStaff(data, pageIndex, pageSize) {
+    return request({
+        url: '/ser/staffinfo/add?pageIndex=' + pageIndex + "&pageSize=" + pageSize,
+        method: 'post',
+        data: data
+    })
+}
+
+export function updateStaff(data, pageIndex, pageSize) {
+    return request({
+        url: '/ser/staffinfo/update?pageIndex=' + pageIndex + "&pageSize=" + pageSize,
+        method: 'post',
+        data: data
+    })
+}
+
+export function deleteStaff(data, pageIndex, pageSize) {
+    return request({
+        url: '/ser/staffinfo/delete?pageIndex=' + pageIndex + "&pageSize=" + pageSize,
+        method: 'post',
+        data: data
+    })
+}
 

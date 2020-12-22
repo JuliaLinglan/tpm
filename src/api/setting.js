@@ -65,3 +65,36 @@ export function deleteMsdisplay(data, pageIndex, pageSize) {
     })
 }
 
+/**
+ * 系统功能设置
+ * @param params
+ * @returns {AxiosPromise}
+ */
+export function getSysFunctionList(params) {
+    return request({url: '/ser/setting/list', method: 'get', params: params})
+}
+
+export function addSysFunction(data, pageIndex, pageSize) {
+    return request({
+        url: '/ser/setting/add?pageIndex=' + pageIndex + "&pageSize=" + pageSize,
+        method: 'post',
+        data: data
+    })
+}
+
+export function updateSysFunction(data, pageIndex, pageSize) {
+    return request({
+        url: '/ser/setting/update?pageIndex=' + pageIndex + "&pageSize=" + pageSize,
+        method: 'post',
+        data: data
+    })
+}
+
+export function deleteSysFunction(data, pageIndex, pageSize) {
+    return request({
+        url: '/ser/setting/delete?pageIndex=' + pageIndex + "&pageSize=" + pageSize,
+        method: 'post',
+        data: data
+    })
+}
+

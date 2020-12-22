@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 Vue.use(Router)
 import Layout from '@/layout'
 import Login from "./views/login/index";
@@ -39,71 +40,52 @@ export const asyncRoutes = [
         redirect: 'department',
         children: [
             {
-                path: 'workunit',
-                name: 'workunit',
-                component: () => import('./views/setting/workunit/index.vue'),
-                meta: {title: '单位'},
-                hidden: false,
-            },
-            {
-                path: 'department',
-                name: 'department',
-                meta: {title: '部门'},
-                component: () => import('./views/setting/department/index.vue'),
-            },
-            {
-                path: 'staff',
-                name: 'staff',
-                meta: {title: '员工'},
-                component: () => import('./views/setting/staff/index.vue'),
-            },
-            {
-                path: 'servicecategory',
-                name: 'servicecategory',
-                meta: {title: '服务'},
-                component: () => import('./views/setting/servicecategory/index.vue'),
-            },
-            {
-                path: 'workstation',
-                name: 'workstation',
-                meta: {title: '工作站'},
-                component: () => import('./views/setting/workstation/index.vue'),
-            },
-            {
-                path: 'priority',
-                name: 'priority',
-                meta: {title: '权限'},
-                component: () => import('./views/setting/priority/index.vue'),
-            },
-            {
-                path: 'maindisplaydevice',
-                name: 'maindisplaydevice',
-                meta: {title: '主显示屏'},
+                path: 'maindisplaydevice', name: 'maindisplaydevice', meta: {title: '主显示屏'},
                 component: () => import('./views/setting/maindisplaydevice/index.vue'),
             },
             {
-                path: 'voice',
-                name: 'voice',
-                meta: {title: '声音'},
+                path: 'sysfunction', name: 'sysfunction', meta: {title: '系统功能'},
+                component: () => import('./views/setting/sysfunction/index.vue'),
+            },
+            {
+                path: 'voice', name: 'voice', meta: {title: '声音'},
                 component: () => import('./views/setting/voice/index.vue'),
             },
             {
-                path: 'ticket',
-                name: 'ticket',
-                meta: {title: '票号'},
+                path: 'ticket', name: 'ticket', meta: {title: '票号'},
                 component: () => import('./views/setting/ticket/index.vue'),
             },
             {
-                path: 'servicekey',
-                name: 'servicekey',
-                meta: {title: '服务键'},
+                path: 'servicekey', name: 'servicekey', meta: {title: '服务键'},
                 component: () => import('./views/setting/servicekey/index.vue'),
             },
             {
-                path: 'reception',
-                name: 'reception',
-                meta: {title: '服务台'},
+                path: 'reception', name: 'reception', meta: {title: '服务台'},
                 component: () => import('./views/setting/reception/index.vue'),
+            },
+            {
+                path: 'workunit', name: 'workunit', meta: {title: '单位'}, hidden: false,
+                component: () => import('./views/setting/workunit/index.vue'),
+            },
+            {
+                path: 'department', name: 'department', meta: {title: '部门'},
+                component: () => import('./views/setting/department/index.vue'),
+            },
+            {
+                path: 'staff', name: 'staff', meta: {title: '员工'},
+                component: () => import('./views/setting/staff/index.vue'),
+            },
+            {
+                path: 'servicecategory', name: 'servicecategory', meta: {title: '服务'},
+                component: () => import('./views/setting/servicecategory/index.vue'),
+            },
+            {
+                path: 'workstation', name: 'workstation', meta: {title: '工作站'},
+                component: () => import('./views/setting/workstation/index.vue'),
+            },
+            {
+                path: 'priority', name: 'priority', meta: {title: '权限'},
+                component: () => import('./views/setting/priority/index.vue'),
             },
         ]
     },
@@ -171,8 +153,10 @@ router.beforeEach((to, from, next) => {
     window.pageYOffset = 0
     next()
 })
+
 export function resetRouter() {
     const newRouter = createRouter()
     router.matcher = newRouter.matcher // reset router
 }
+
 export default router

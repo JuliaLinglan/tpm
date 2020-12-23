@@ -13,26 +13,24 @@
                 </el-form>
 
                 <el-table
-                    class="tt-table"
-                    empty-text="没有数据"
-                    header-cell-class-name="table_header_style"
-                    :data="dataList">
-<!--                    <el-table-column prop="staff_picpath" label="员工图片" header-align="center" align="center">-->
-<!--                        <template slot-scope="scope">-->
-<!--                            <el-popover placement="top-start" title="" trigger="hover">-->
-<!--                                <img :src="scope.row.staff_picpath" alt="" style="width: 150px;height: 150px">-->
-<!--                                <img slot="reference" :src="scope.row.staff_picpath" style="width: 30px;height: 30px">-->
-<!--                            </el-popover>-->
-<!--                        </template>-->
-<!--                    </el-table-column>-->
+                        class="tt-table"
+                        empty-text="没有数据"
+                        header-cell-class-name="table_header_style"
+                        :data="dataList">
                     <el-table-column prop="staff_name" label="员工姓名">
                         <template slot-scope="scope">
-                            <el-popover placement="top-start" title="" trigger="hover">
-                                <img :src="scope.row.staff_picpath" alt="" style="width: 150px;height: 150px">
-                                <img slot="reference" :src="scope.row.staff_picpath" style="width: 30px;height: 30px">
-                            </el-popover>
-                            <div style="margin-left: 10px">{{scope.row.staff_name}}</div>
-
+                            <div>
+                                <div style="float: left;">
+                                    <el-popover placement="top-start" title="" trigger="hover">
+                                        <img :src="scope.row.staff_picpath" alt="" style="width: 150px;height: 150px">
+                                        <img slot="reference" :src="scope.row.staff_picpath"
+                                             style="width: 30px;height: 30px">
+                                    </el-popover>
+                                </div>
+                                <div style="float: left;margin-top: 4px;margin-left: 10px;">
+                                    {{scope.row.staff_name}}
+                                </div>
+                            </div>
                         </template>
                     </el-table-column>
                     <el-table-column prop="staff_pass" label="登录密码"></el-table-column>
@@ -159,16 +157,17 @@ export default {
             //     this.loading = false
             // })
 
-           let data={
+            let data = {
                 staff_code: "111",
-                    staff_name: "1111",
-                    staff_pass: "111",
-                    staff_level: 0,
-                    staff_title: "1111",
-                    staff_picpath: "D:\\1.jpg",
-                    staff_enable: true,
-                    base64pic: ""}
-               this.dataList =[data]
+                staff_name: "1111",
+                staff_pass: "111",
+                staff_level: 0,
+                staff_title: "1111",
+                staff_picpath: "D:\\1.jpg",
+                staff_enable: true,
+                base64pic: ""
+            }
+            this.dataList = [data]
         },
 
         handleAdd() {
@@ -268,29 +267,32 @@ export default {
 </script>
 
 <style lang="scss">
-.avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-    border-color: #004e7e;
-}
-.avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 150px;
-    height: 100px;
-    line-height: 100px;
-    text-align: center;
-}
-.avatar {
-    width: 150px;
-    height: 100px;
-    display: block;
-}
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .avatar-uploader .el-upload:hover {
+        border-color: #004e7e;
+    }
+
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 150px;
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+    }
+
+    .avatar {
+        width: 150px;
+        height: 100px;
+        display: block;
+    }
 </style>
 <!--public int ID { get; set; }-->
 <!--public string Staff_Code { get; set; }-->

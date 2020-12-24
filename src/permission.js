@@ -9,6 +9,7 @@ router.beforeEach(async (to, from, next) => {
     Message.closeAll()
     //获取token
     let hasToken = Cookies.get("token")
+    // let hasToken = true
     if (hasToken) {
         if (to.path === '/login') {
             next(`/`)

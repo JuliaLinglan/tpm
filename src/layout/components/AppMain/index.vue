@@ -58,7 +58,7 @@ export default {
     position: relative;
     background: #f2f7fb;
     overflow: auto;
-
+    min-width: 1200px;
     .back-item {
         height: 40px;
         line-height: 40px;

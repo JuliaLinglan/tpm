@@ -56,6 +56,10 @@ export const asyncRoutes = [
                 component: () => import('./views/setting/ticket/index.vue'),
             },
             {
+                path: 'ticket/detail', name: 'ticketDetail', meta: {title: '票号详情'}, hidden: true,
+                component: () => import('./views/setting/ticket/detail.vue'),
+            },
+            {
                 path: 'servicekey', name: 'servicekey', meta: {title: '服务键'},
                 component: () => import('./views/setting/servicekey/index.vue'),
             },

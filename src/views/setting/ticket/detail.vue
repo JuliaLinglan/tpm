@@ -20,40 +20,159 @@
                     <div style="text-align: center;font-size: 18px">配置</div>
                     <div class="component-title">标题</div>
                     <el-divider></el-divider>
-                    <el-button @click="handleMainTitle" type="primary" size="medium">
-                        主标题
-                    </el-button>
-                    <el-button type="primary" size="medium" class="relative">
-                        副标题
-                        <span class="absolute">
-                            <svg-icon icon-class="btn-close" style="width: 12px; height: 12px;"></svg-icon>
+                    <span class="relative">
+                        <el-button @click="handleAddContent(0)" type="primary" size="medium"
+                                   :disabled="this.ticketDataList[0].isChoose">主标题</el-button>
+                        <span class="absolute" v-on:click="handleCancelContent(0)"
+                              v-if="this.ticketDataList[0].isChoose===true">
+                            <svg-icon icon-class="btn-close" class="svg-size"></svg-icon>
                         </span>
-                    </el-button>
+                    </span>
+                    <span class="relative">
+                        <el-button @click="handleAddContent(1)" type="primary" size="medium"
+                                   :disabled="this.ticketDataList[1].isChoose">副标题</el-button>
+                        <span class="absolute" v-on:click="handleCancelContent(1)"
+                              v-if="this.ticketDataList[1].isChoose===true">
+                            <svg-icon icon-class="btn-close" class="svg-size"></svg-icon>
+                        </span>
+                    </span>
+                    <div class="component-title">票号</div>
+                    <el-divider></el-divider>
+                    <span class="relative">
+                            <el-button type="primary" size="medium" :disabled="true">票号</el-button>
+                            <span class="absolute" v-on:click="handleEditTicketNum(2)">
+                                <svg-icon icon-class="edit" class="svg-size"></svg-icon>
+                            </span>
+                    </span>
                     <div class="component-title">提示</div>
                     <el-divider></el-divider>
                     <div class="tips">
-                        <el-button type="primary" size="medium">行一</el-button>
-                        <el-button type="primary" size="medium">行二</el-button>
-                        <el-button type="primary" size="medium">行三</el-button>
-                        <el-button type="primary" size="medium">行四</el-button>
-                        <el-button type="primary" size="medium">行五</el-button>
+                        <span class="relative">
+                            <el-button @click="handleAddContent(3)" type="primary" size="medium"
+                                       :disabled="this.ticketDataList[3].isChoose">行一</el-button>
+                            <span class="absolute" v-on:click="handleCancelContent(3)"
+                                  v-if="this.ticketDataList[3].isChoose===true">
+                             <svg-icon icon-class="btn-close" class="svg-size"></svg-icon>
+                            </span>
+                         </span>
+                        <span class="relative">
+                            <el-button @click="handleAddContent(4)" type="primary" size="medium"
+                                       :disabled="this.ticketDataList[4].isChoose">行二</el-button>
+                            <span class="absolute" v-on:click="handleCancelContent(4)"
+                                  v-if="this.ticketDataList[4].isChoose===true">
+                             <svg-icon icon-class="btn-close" class="svg-size"></svg-icon>
+                            </span>
+                         </span>
+                        <span class="relative">
+                            <el-button @click="handleAddContent(5)" type="primary" size="medium"
+                                       :disabled="this.ticketDataList[5].isChoose">行三</el-button>
+                            <span class="absolute" v-on:click="handleCancelContent(5)"
+                                  v-if="this.ticketDataList[5].isChoose===true">
+                             <svg-icon icon-class="btn-close" class="svg-size"></svg-icon>
+                            </span>
+                         </span>
+                        <span class="relative">
+                            <el-button @click="handleAddContent(6)" type="primary" size="medium"
+                                       :disabled="this.ticketDataList[6].isChoose">行四</el-button>
+                            <span class="absolute" v-on:click="handleCancelContent(6)"
+                                  v-if="this.ticketDataList[6].isChoose===true">
+                             <svg-icon icon-class="btn-close" class="svg-size"></svg-icon>
+                            </span>
+                         </span>
+                        <span class="relative">
+                            <el-button @click="handleAddContent(7)" type="primary" size="medium"
+                                       :disabled="this.ticketDataList[7].isChoose">行五</el-button>
+                            <span class="absolute" v-on:click="handleCancelContent(7)"
+                                  v-if="this.ticketDataList[7].isChoose===true">
+                             <svg-icon icon-class="btn-close" class="svg-size"></svg-icon>
+                            </span>
+                         </span>
                     </div>
                     <div class="tips">
-                        <el-button type="primary" size="medium">行六</el-button>
-                        <el-button type="primary" size="medium">行七</el-button>
-                        <el-button type="primary" size="medium">行八</el-button>
-                        <el-button type="primary" size="medium">行九</el-button>
-                        <el-button type="primary" size="medium">行十</el-button>
+                        <span class="relative">
+                            <el-button @click="handleAddContent(8)" type="primary" size="medium"
+                                       :disabled="this.ticketDataList[8].isChoose">行六</el-button>
+                            <span class="absolute" v-on:click="handleCancelContent(8)"
+                                  v-if="this.ticketDataList[8].isChoose===true">
+                             <svg-icon icon-class="btn-close" class="svg-size"></svg-icon>
+                            </span>
+                         </span>
+                        <span class="relative">
+                            <el-button @click="handleAddContent(9)" type="primary" size="medium"
+                                       :disabled="this.ticketDataList[9].isChoose">行七</el-button>
+                            <span class="absolute" v-on:click="handleCancelContent(9)"
+                                  v-if="this.ticketDataList[9].isChoose===true">
+                             <svg-icon icon-class="btn-close" class="svg-size"></svg-icon>
+                            </span>
+                         </span>
+                        <span class="relative">
+                            <el-button @click="handleAddContent(10)" type="primary" size="medium"
+                                       :disabled="this.ticketDataList[10].isChoose">行八</el-button>
+                            <span class="absolute" v-on:click="handleCancelContent(10)"
+                                  v-if="this.ticketDataList[10].isChoose===true">
+                             <svg-icon icon-class="btn-close" class="svg-size"></svg-icon>
+                            </span>
+                         </span>
+                        <span class="relative">
+                            <el-button @click="handleAddContent(11)" type="primary" size="medium"
+                                       :disabled="this.ticketDataList[11].isChoose">行九</el-button>
+                            <span class="absolute" v-on:click="handleCancelContent(11)"
+                                  v-if="this.ticketDataList[11].isChoose===true">
+                             <svg-icon icon-class="btn-close" class="svg-size"></svg-icon>
+                            </span>
+                         </span>
+                        <span class="relative">
+                            <el-button @click="handleAddContent(12)" type="primary" size="medium"
+                                       :disabled="this.ticketDataList[12].isChoose">行十</el-button>
+                            <span class="absolute" v-on:click="handleCancelContent(12)"
+                                  v-if="this.ticketDataList[12].isChoose===true">
+                             <svg-icon icon-class="btn-close" class="svg-size"></svg-icon>
+                            </span>
+                         </span>
                     </div>
                     <div class="component-title">时间</div>
                     <el-divider></el-divider>
-                    <el-button type="primary" size="medium">时间</el-button>
+                    <span class="relative">
+                            <el-button @click="handleAddContent(13)" type="primary" size="medium"
+                                       :disabled="this.ticketDataList[13].isChoose">时间</el-button>
+                            <span class="absolute" v-on:click="handleCancelContent(13)"
+                                  v-if="this.ticketDataList[13].isChoose===true">
+                             <svg-icon icon-class="btn-close" class="svg-size"></svg-icon>
+                            </span>
+                         </span>
                 </div>
 
                 <div class="template-container">
                     <div style="text-align: center;margin-bottom: 10px;font-size: 18px">显示</div>
+                    <!--<p style="font-size: 20px;text-align: center;background-color: #4AB7BD">this iddddddddddd</p>-->
                     <div v-for="(item,index) in ticketDataList" :key="index" style="background-color: #ffffff">
-                        {{item}}
+                        <!--                        {{ item }}-->
+                        <p :style="{textAlign:item.textAlign,fontSize:item.textSize+'px',margin:'0px',backgroundColor:item.isClicked?'#00ffff':'#ffffff'}"
+                           v-if="item.isChoose===true">{{ item.textContent }}</p>
+                    </div>
+                </div>
+                <div class="property-container">
+                    <div class="el-dialog__header">
+                        <span class="el-dialog__title">属性</span>
+                    </div>
+                    <div class="el-dialog__body">
+                        <el-form :rules="rules" :model="dataForm" ref="form" size="medium" style="width:96%;"
+                                 label-width="100px">
+                            <el-form-item label="文本内容：" prop="textContent">
+                                <el-input v-model="dataForm.textContent"
+                                          :disabled="dataForm.contentEditEnable"></el-input>
+                            </el-form-item>
+                            <el-form-item label="字体大小：" prop="textSize">
+                                <InputNumber v-model="dataForm.textSize" :min="10"></InputNumber>
+                            </el-form-item>
+                            <el-form-item label="文本对齐：" prop="textAlign">
+                                <el-select placeholder="请选择" v-model="dataForm.textAlign">
+                                    <el-option label="左对齐" value="left"></el-option>
+                                    <el-option label="居中" value="center"></el-option>
+                                    <el-option label="右对齐" value="right"></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-form>
                     </div>
 
                 </div>
@@ -67,65 +186,138 @@ export default {
     name: "detail",
     data() {
         return {
+            dataForm: {
+                textContent: "",
+                textSize: 10,
+                textAlign: "",
+                contentEditEnable: false
+            },
             templateName: "",
-            ticketDataList: [],
+            ticketDataList: [
+                {textContent: "复旦大学附属耳鼻喉科医院", textSize: 15, textAlign: "center", isChoose: true, isClicked: false},
+                {textContent: "儿科", textSize: 15, textAlign: "center", isChoose: true, isClicked: false},
+                {textContent: "0000", textSize: 22, textAlign: "center", isChoose: true, isClicked: false},
+                {textContent: "您的检查室房间为12号检查室", textSize: 15, textAlign: "center", isChoose: true, isClicked: false},
+                {textContent: "请注意您的排队号码", textSize: 15, textAlign: "center", isChoose: true, isClicked: false},
+                {textContent: "号票当日有效", textSize: 15, textAlign: "center", isChoose: true, isClicked: false},
+                {textContent: "提示", textSize: 15, textAlign: "center", isChoose: false, isClicked: false},
+                {textContent: "提示", textSize: 15, textAlign: "center", isChoose: false, isClicked: false},
+                {textContent: "提示", textSize: 15, textAlign: "center", isChoose: false, isClicked: false},
+                {textContent: "提示", textSize: 15, textAlign: "center", isChoose: false, isClicked: false},
+                {textContent: "提示", textSize: 15, textAlign: "center", isChoose: false, isClicked: false},
+                {textContent: "提示", textSize: 15, textAlign: "center", isChoose: false, isClicked: false},
+                {textContent: "提示", textSize: 15, textAlign: "center", isChoose: false, isClicked: false},
+                {
+                    textContent: "YYYY-mm-dd HH:mm:ss",
+                    textSize: 15,
+                    textAlign: "center",
+                    isChoose: true,
+                    isClicked: false
+                }
+            ],
             pageIndex: 1,
             pageSize: 5,
             total: 0,
             rules: {
-                // staff_name: [{required: true, message: "值不能为空", trigger: 'blur'}],
+                textContent: [{required: true, message: "值不能为空", trigger: 'blur'}],
+                textSize: [{required: true, message: "值不能为空", trigger: 'blur'}],
+                textAlign: [{required: true, message: "值不能为空", trigger: 'blur'}],
             },
         }
     },
+    mounted() {
+        this.initData()
+        console.log("this.ticketDataList: ", this.ticketDataList)
+
+    },
     methods: {
-        handleMainTitle() {
-            this.ticketDataList.push("this is test.")
-        }
+        initData() {
+
+        },
+        handleAddContent(index) {
+            for (let i = 0; i < this.ticketDataList.length; i++) {
+                this.ticketDataList[i].isClicked = false
+            }
+            let item = this.ticketDataList[index]
+            this.dataForm = item
+            this.ticketDataList[index].isChoose = true
+            this.ticketDataList[index].isClicked = true
+            this.$set(this.ticketDataList, index, item)
+        },
+        handleCancelContent(index) {
+            let item = this.ticketDataList[index]
+            this.dataForm = {}
+            this.ticketDataList[index].isChoose = false
+            this.$set(this.ticketDataList, index, item)
+        },
+        handleEditTicketNum(index) {
+            for (let i = 0; i < this.ticketDataList.length; i++) {
+                this.ticketDataList[i].isClicked = false
+            }
+            let item = this.ticketDataList[index]
+            this.dataForm = item
+            this.dataForm.contentEditEnable = true
+            this.ticketDataList[index].isChoose = true
+            this.ticketDataList[index].isClicked = true
+            this.$set(this.ticketDataList, index, item)
+        },
     }
 }
 </script>
 <style lang="scss">
-    .relative {
-        position: relative;
-    }
+.relative {
+    position: relative;
+    margin-right: 10px;
+}
 
-    .absolute {
-        position: absolute;
-        top: -3px;
-        right: -1px;
-    }
+.absolute {
+    position: absolute;
+    top: -13px;
+    right: -1px;
+}
 
-    .component-box {
-        width: 42%;
-        border: 3px dotted #3A71A8;
-        padding: 10px 30px;
-        margin: 20px 40px 20px 80px;
-    }
+.component-box {
+    width: 35%;
+    border: 3px dotted #3A71A8;
+    padding: 10px 30px;
+    margin: 20px;
+}
 
-    .component-title {
-        margin-top: 20px;
-    }
+.component-title {
+    margin-top: 20px;
+}
 
-    .template-name-input {
-        width: 200px;
-        margin-left: 10px;
-        margin-right: 10px
-    }
+.template-name-input {
+    width: 200px;
+    margin-left: 10px;
+    margin-right: 10px
+}
 
-    .template-container {
-        width: 35%;
-        border: 3px dotted #3A71A8;
-        padding: 10px 30px;
-        margin: 20px 40px;
-        background-color: #f2f7fb;
-    }
+.template-container {
+    width: 30%;
+    border: 3px dotted #3A71A8;
+    padding: 10px 30px;
+    margin: 20px 40px;
+    background-color: #f2f7fb;
+}
 
-    .tips {
-        margin-bottom: 10px
-    }
+.property-container {
+    height: 300px;
+    width: 350px;
+    border: 1px solid #3A71A8;
+    margin: 20px 40px;
+}
 
-    .el-divider.el-divider--horizontal {
-        margin: 10px 0;
-    }
+.tips {
+    margin-bottom: 10px
+}
 
+.el-divider.el-divider--horizontal {
+    margin: 10px 0;
+}
+
+.svg-size {
+    width: 12px;
+    height: 12px;
+}
 </style>

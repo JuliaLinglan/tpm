@@ -105,7 +105,7 @@ export default {
                 set_para: "",
                 set_value: "",
                 set_note: 0,
-                set_enable: "",
+                set_enable: false,
                 set_createtime: "",
             },
             rules: {

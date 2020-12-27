@@ -35,7 +35,7 @@ export default {
     },
     methods: {
         handleAdd() {
-          this.$router.push('/ticket/detail')
+          this.$router.push('/ticketdetail')
         },
     }
 }

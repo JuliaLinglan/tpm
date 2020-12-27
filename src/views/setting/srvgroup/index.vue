@@ -20,7 +20,7 @@
                     <el-table-column prop="srvgroup_group" label="服务类型组"></el-table-column>
                     <el-table-column prop="srvgroup_no" label="第三方的类型ID"></el-table-column>
                     <el-table-column prop="srvgroup_name" label="类型名称"></el-table-column>
-                    <el-table-column prop="srvgroup_letter" label="标识"></el-table-column>
+                    <el-table-column prop="srvgroup_letter" label="字母标识"></el-table-column>
                     <el-table-column prop="srvgroup_start_num" label="开始号码"></el-table-column>
                     <el-table-column prop="srvgroup_end_num" label="结束号码"></el-table-column>
                     <el-table-column prop="srvgroup_enterqueuetime" label="进入队列行走时间（分钟）"></el-table-column>
@@ -56,7 +56,7 @@
                                 <el-form-item label="类型名称：" prop="srvgroup_name">
                                     <el-input v-model="dataForm.srvgroup_name"></el-input>
                                 </el-form-item>
-                                <el-form-item label="标识：" prop="srvgroup_letter">
+                                <el-form-item label="字母标识：" prop="srvgroup_letter">
                                     <el-input v-model="dataForm.srvgroup_letter"></el-input>
                                 </el-form-item>
                             </el-col>
@@ -249,6 +249,7 @@ export default {
 </script>
 
 <style lang="scss">
+//长本本提示框
 .el-tooltip__popper {
     max-width: 300px;
     padding: 16px;

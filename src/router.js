@@ -56,12 +56,8 @@ export const asyncRoutes = [
                 component: () => import('./views/setting/ticket/index.vue'),
             },
             {
-                path: 'ticket/detail', name: 'ticketDetail', meta: {title: '票号详情'}, hidden: true,
+                path: 'ticketdetail', name: 'ticketDetail', meta: {title: '票号详情'}, hidden: true,
                 component: () => import('./views/setting/ticket/detail.vue'),
-            },
-            {
-                path: 'servicekey', name: 'servicekey', meta: {title: '服务键'},
-                component: () => import('./views/setting/servicekey/index.vue'),
             },
             {
                 path: 'reception', name: 'reception', meta: {title: '服务台'},
@@ -88,8 +84,12 @@ export const asyncRoutes = [
                 component: () => import('./views/setting/workstation/index.vue'),
             },
             {
-                path: 'priority', name: 'priority', meta: {title: '权限'},
+                path: 'priority', name: 'priority', meta: {title: '优先级'},
                 component: () => import('./views/setting/priority/index.vue'),
+            },
+            {
+                path: 'prioritydetail', name: 'priorityDetail', meta: {title: '优先级详情'}, hidden: true,
+                component: () => import('./views/setting/priority/detail.vue'),
             },
         ]
     },

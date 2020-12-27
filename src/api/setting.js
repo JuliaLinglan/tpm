@@ -32,6 +32,7 @@ export function deleteMaindisplay(data, pageIndex, pageSize) {
         data: data
     })
 }
+
 /**
  * 服务台
  * @param params
@@ -97,6 +98,7 @@ export function deleteSysFunction(data, pageIndex, pageSize) {
         data: data
     })
 }
+
 /**
  * 服务类别设置
  * @param params
@@ -161,5 +163,81 @@ export function deleteStaff(data, pageIndex, pageSize) {
         method: 'post',
         data: data
     })
+}
+
+/**
+ * 工作站设置
+ * @param params
+ * @returns {AxiosPromise}
+ */
+export function getWorkstationList(params) {
+    return request({url: 'ser/workstation/list', method: 'get', params: params})
+}
+
+export function addWorkstation(data, pageIndex, pageSize) {
+    return request({
+        url: '/ser/workstation/add?pageIndex=' + pageIndex + "&pageSize=" + pageSize,
+        method: 'post',
+        data: data
+    })
+}
+
+export function updateWorkstation(data, pageIndex, pageSize) {
+    return request({
+        url: '/ser/workstation/update?pageIndex=' + pageIndex + "&pageSize=" + pageSize,
+        method: 'post',
+        data: data
+    })
+}
+
+export function deleteWorkstation(data, pageIndex, pageSize) {
+    return request({
+        url: '/ser/workstation/delete?pageIndex=' + pageIndex + "&pageSize=" + pageSize,
+        method: 'post',
+        data: data
+    })
+}
+
+/**
+ * 优先级设置
+ * @param params
+ * @returns {AxiosPromise}
+ */
+export function getPriorityList(params) {
+    return request({url: 'ser/priority/list', method: 'get', params: params})
+}
+
+export function addPriority(data) {
+    return request({
+        url: '/ser/priority/add',
+        method: 'post',
+        data: data
+    })
+}
+
+export function updatePriority(data) {
+    return request({url: '/ser/priority/update', method: 'post', data: data})
+}
+
+export function deletePriority(data, pageIndex, pageSize) {
+    return request({
+        url: '/ser/priority/delete?pageIndex=' + pageIndex + "&pageSize=" + pageSize,
+        method: 'post',
+        data: data
+    })
+}
+
+//获取优先级详情
+export function getPriorityById(params) {
+    return request({url: 'ser/priority/listpriorities', method: 'get', params: params})
+}
+
+//获取等级下所有服务类别详情
+export function getLevelDetail(params) {
+    return request({url: 'ser/priority/listsrvgroups', method: 'get', params: params})
+}
+
+export function addSrvTypePriority(data) {
+    return request({url: '/ser/priority/addsrvgroups', method: 'post', data: data})
 }
 

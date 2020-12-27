@@ -13,26 +13,28 @@
                 </el-form>
 
                 <el-table
-                        class="tt-table"
-                        empty-text="没有数据"
-                        header-cell-class-name="table_header_style"
-                        :data="dataList">
+                    class="tt-table"
+                    empty-text="没有数据"
+                    header-cell-class-name="table_header_style"
+                    :data="dataList">
                     <el-table-column prop="staff_name" label="员工姓名">
                         <template slot-scope="scope">
                             <div>
-                                <div style="float: left;">
+                                <div style="float: left;margin-top: 4px">
                                     <el-popover placement="top-start" title="" trigger="hover">
-                                        <img :src="scope.row.staff_picpath" alt="" style="width: 150px;height: 150px">
-                                        <img slot="reference" :src="scope.row.staff_picpath"
+                                        <img :src="picBaseUrl+scope.row.staff_picpath" alt=""
+                                             style="width: 150px;height: 150px">
+                                        <img slot="reference" :src="picBaseUrl+scope.row.staff_picpath"
                                              style="width: 30px;height: 30px">
                                     </el-popover>
                                 </div>
-                                <div style="float: left;margin-top: 4px;margin-left: 10px;">
-                                    {{scope.row.staff_name}}
+                                <div style="float: left;margin-top: 6px;margin-left: 10px;">
+                                    {{ scope.row.staff_name }}
                                 </div>
                             </div>
                         </template>
                     </el-table-column>
+                    <el-table-column prop="staff_code" label="员工编号"></el-table-column>
                     <el-table-column prop="staff_pass" label="登录密码"></el-table-column>
                     <el-table-column prop="staff_level" label="员工级别"></el-table-column>
                     <el-table-column prop="staff_title" label="员工职称"></el-table-column>
@@ -59,7 +61,6 @@
                     ></el-pagination>
                 </div>
             </div>
-
             <el-dialog v-dialogDrag :title="dialogFormTitle" :close-on-click-modal="false"
                        :visible.sync="showAddDialog" append-to-body width="500px">
                 <div class="dialog-content">
@@ -74,6 +75,9 @@
                                 </el-tooltip>
                             </el-upload>
                         </el-form-item>
+                        <el-form-item label="员工编号：" prop="staff_code">
+                            <el-input v-model="dataForm.staff_code"></el-input>
+                        </el-form-item>
                         <el-form-item label="员工姓名：" prop="staff_name">
                             <el-input v-model="dataForm.staff_name"></el-input>
                         </el-form-item>
@@ -87,7 +91,7 @@
                             <el-input v-model="dataForm.staff_title"></el-input>
                         </el-form-item>
                         <el-form-item label="是否启用：" prop="staff_enable">
-                            <el-select placeholder="请选择" v-model="dataForm.staff_enable">
+                            <el-select placeholder="请选择" v-model="dataForm.staff_enable" style="width: 320px">
                                 <el-option label="是" :value=true></el-option>
                                 <el-option label="否" :value=false></el-option>
                             </el-select>
@@ -113,6 +117,8 @@ export default {
 
     data() {
         return {
+            dialogVisible: true,
+            picBaseUrl: "http://192.168.3.4:6000/pictures/",
             imageBase64: '',
             btnLoading: false,
             dataList: [],
@@ -129,10 +135,11 @@ export default {
                 staff_level: 0,
                 staff_title: "",
                 staff_picpath: "",
-                staff_enable: "",
+                staff_enable: false,
                 base64pic: ""
             },
             rules: {
+                staff_code: [{required: true, message: "值不能为空", trigger: 'blur'}],
                 staff_name: [{required: true, message: "值不能为空", trigger: 'blur'}],
             },
         }
@@ -146,28 +153,28 @@ export default {
             this.getList();
         },
         getList() {
-            // this.loading = true
-            // getStaffList({pageIndex: this.pageIndex - 1, pageSize: this.pageSize}).then(res => {
-            //     let result = res.data.result
-            //     this.dataList = result.data
-            //     this.total = result.totalitemcount
-            //     this.pageindex = result.pageindex
-            //     this.loading = false
-            // }).catch((err) => {
-            //     this.loading = false
-            // })
+            this.loading = true
+            getStaffList({pageIndex: this.pageIndex - 1, pageSize: this.pageSize}).then(res => {
+                let result = res.data.result
+                this.dataList = result.data
+                this.total = result.totalitemcount
+                this.pageindex = result.pageindex
+                this.loading = false
+            }).catch((err) => {
+                this.loading = false
+            })
 
-            let data = {
-                staff_code: "111",
-                staff_name: "1111",
-                staff_pass: "111",
-                staff_level: 0,
-                staff_title: "1111",
-                staff_picpath: "D:\\1.jpg",
-                staff_enable: true,
-                base64pic: ""
-            }
-            this.dataList = [data]
+            // let data = {
+            //     staff_code: "111",
+            //     staff_name: "1111",
+            //     staff_pass: "111",
+            //     staff_level: 0,
+            //     staff_title: "1111",
+            //     staff_picpath: "D:\\1.jpg",
+            //     staff_enable: true,
+            //     base64pic: ""
+            // }
+            // this.dataList = [data]
         },
 
         handleAdd() {
@@ -243,13 +250,13 @@ export default {
             this.btnLoading = false
         },
         beforeAvatarUpload(file) {
-            const isJPG = file.type === 'image/jpeg';
+            let imgType = (file.raw.type === 'image/jpeg' || file.raw.type === 'image/jpg' || file.raw.type === 'image/png');
             const isLt2M = file.size / 1024 / 1024 < 2;
 
-            // if (!isJPG) {
-            //     this.$errMsg('上传头像图片只能是 JPG 格式!');
-            //     return;
-            // }
+            if (!imgType) {
+                this.$errMsg('上传头像图片只能是 JPG或者PNG 格式!');
+                return;
+            }
             if (!isLt2M) {
                 this.$errMsg('上传头像图片大小不能超过 2MB!');
                 return;
@@ -267,32 +274,32 @@ export default {
 </script>
 
 <style lang="scss">
-    .avatar-uploader .el-upload {
-        border: 1px dashed #d9d9d9;
-        border-radius: 6px;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
 
-    .avatar-uploader .el-upload:hover {
-        border-color: #004e7e;
-    }
+.avatar-uploader .el-upload:hover {
+    border-color: #004e7e;
+}
 
-    .avatar-uploader-icon {
-        font-size: 28px;
-        color: #8c939d;
-        width: 150px;
-        height: 100px;
-        line-height: 100px;
-        text-align: center;
-    }
+.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 150px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+}
 
-    .avatar {
-        width: 150px;
-        height: 100px;
-        display: block;
-    }
+.avatar {
+    width: 150px;
+    height: 100px;
+    display: block;
+}
 </style>
 <!--public int ID { get; set; }-->
 <!--public string Staff_Code { get; set; }-->

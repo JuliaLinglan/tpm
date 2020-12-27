@@ -54,6 +54,7 @@
                                     <el-time-picker
                                         v-model="dataForm.ms_amstarttime"
                                         value-format="HH:mm:ss"
+                                        value="08:00:00"
                                         placeholder="任意时间点">
                                     </el-time-picker>
                                 </el-form-item>

@@ -34,7 +34,7 @@
                     <el-table-column prop="md_scroll_time" label="滚动时间"></el-table-column>
                     <el-table-column prop="md_dialog_enable" label="弹框标识">
                         <template slot-scope="scope">
-                            {{ $dict.getDialogEnable(scope.row.md_dialog_enable).label }}
+                            {{ scope.row.md_dialog_enable === true ? "是" : "否" }}
                         </template>
                     </el-table-column>
                     <el-table-column prop="md_dialog_time" label="弹框显示时间（秒）"></el-table-column>
@@ -103,9 +103,8 @@
                                 </el-form-item>
                                 <el-form-item label="弹框标识：" prop="md_dialog_enable">
                                     <el-select placeholder="请选择" v-model="dataForm.md_dialog_enable">
-                                        <el-option :label="item.label" :value="item.value"
-                                                   v-for="(item,index) in $dict.getDialogEnable()"
-                                                   :key="index"></el-option>
+                                        <el-option label="是" :value=true></el-option>
+                                        <el-option label="否" :value=false></el-option>
                                     </el-select>
                                 </el-form-item>
                             </el-col>
@@ -161,8 +160,7 @@ export default {
                 md_flup_time: 0,
                 md_scroll_txt: "",
                 md_scroll_time: 0,
-                md_dialog_enable: "",
-                dialogenable: "",
+                md_dialog_enable: false,
                 md_dialog_time: 0,
                 md_queue_view: "",
             },
@@ -236,13 +234,11 @@ export default {
                 this.btnLoading = true
                 let postData = {};
                 Object.assign(postData, this.dataForm);
-                postData.dialogenable = postData.md_dialog_enable === true ? "1" : "0"
                 if (postData.id === 0) {
                     addMaindisplay(postData, this.pageIndex - 1, this.pageSize)
                         .then((res) => {
                             let result = res.data.result
                             this.dataList = result.data
-                            // this.getList();
                             this.showAddDialog = false;
                             this.$message.success("添加成功！");
                             this.btnLoading = false

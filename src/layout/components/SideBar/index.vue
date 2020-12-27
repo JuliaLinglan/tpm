@@ -48,12 +48,10 @@ export default {
             return path;
         },
         variables() {
-            // console.log("access_routes: ",access_routes)
-
             return variables;
         },
         isCollapse() {
-            console.log("isCollapse",this.sidebar.opened)
+            // console.log("isCollapse",this.sidebar.opened)
             return !this.sidebar.opened;
         }
     },

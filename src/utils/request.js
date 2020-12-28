@@ -33,11 +33,12 @@ service.interceptors.response.use(
     error => {
         // console.log('err: ', error) // for debug
         let status = error.response.status
+        // let status = 401
         if (status === 401) {
             alert("登录超时，请重新登录")
             // Message.error("Session expired.");
             store.dispatch('user/Logout').then(res => {
-                next(`/`)
+                next(`/login`)
             })
             return Promise.reject(error.response.data);
         } else {

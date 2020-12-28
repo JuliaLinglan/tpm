@@ -12,17 +12,27 @@
                     </el-form-item>
                 </el-form>
                 <el-table
-                        class="tt-table"
-                        empty-text="没有数据"
-                        header-cell-class-name="table_header_style"
-                        :data="dataList">
+                    class="tt-table"
+                    empty-text="没有数据"
+                    header-cell-class-name="table_header_style"
+                    :data="dataList">
                     <el-table-column prop="ms_name" label="服务台名称"></el-table-column>
                     <el-table-column prop="ms_ip" label="服务台IP"></el-table-column>
                     <el-table-column prop="ms_amstarttime" label="上午开始取票时间"></el-table-column>
                     <el-table-column prop="ms_amendtime" label="上午结束取票时间"></el-table-column>
                     <el-table-column prop="ms_pmstarttime" label="下午开始取票时间"></el-table-column>
                     <el-table-column prop="ms_pmendtime" label="下午结束取票时间"></el-table-column>
-                    <el-table-column width="150px" label="操作">
+                    <el-table-column width="100px" label="工作站">
+                        <template slot-scope="scope">
+                            <el-button size="mini" @click="handleSetting(scope.$index, scope.row)">设置</el-button>
+                        </template>
+                    </el-table-column>
+                    <el-table-column width="100px" label="服务台">
+                        <template slot-scope="scope">
+                            <el-button size="mini" @click="handleSettingSrv(scope.$index, scope.row)">设置</el-button>
+                        </template>
+                    </el-table-column>
+                    <el-table-column width="220px" label="操作">
                         <template slot-scope="scope">
                             <el-button size="mini" type="primary"
                                        @click="handleUpdate(scope.$index, scope.row)">编辑
@@ -52,16 +62,16 @@
                                 </el-form-item>
                                 <el-form-item label="上午开始取票时间：" prop="ms_amstarttime">
                                     <el-time-picker
-                                            v-model="dataForm.ms_amstarttime"
-                                            value-format="HH:mm:ss"
-                                            placeholder="任意时间点">
+                                        v-model="dataForm.ms_amstarttime"
+                                        value-format="HH:mm:ss"
+                                        placeholder="任意时间点">
                                     </el-time-picker>
                                 </el-form-item>
                                 <el-form-item label="下午开始取票时间：" prop="ms_pmstarttime">
                                     <el-time-picker
-                                            v-model="dataForm.ms_pmstarttime"
-                                            value-format="HH:mm:ss"
-                                            placeholder="任意时间点">
+                                        v-model="dataForm.ms_pmstarttime"
+                                        value-format="HH:mm:ss"
+                                        placeholder="任意时间点">
                                     </el-time-picker>
                                 </el-form-item>
 
@@ -73,16 +83,16 @@
 
                                 <el-form-item label="上午结束取票时间：" prop="ms_amendtime">
                                     <el-time-picker
-                                            v-model="dataForm.ms_amendtime"
-                                            value-format="HH:mm:ss"
-                                            placeholder="任意时间点">
+                                        v-model="dataForm.ms_amendtime"
+                                        value-format="HH:mm:ss"
+                                        placeholder="任意时间点">
                                     </el-time-picker>
                                 </el-form-item>
                                 <el-form-item label="下午结束取票时间：" prop="ms_pmendtime">
                                     <el-time-picker
-                                            v-model="dataForm.ms_pmendtime"
-                                            value-format="HH:mm:ss"
-                                            placeholder="任意时间点">
+                                        v-model="dataForm.ms_pmendtime"
+                                        value-format="HH:mm:ss"
+                                        placeholder="任意时间点">
                                     </el-time-picker>
                                 </el-form-item>
                             </el-col>
@@ -95,22 +105,80 @@
                     </div>
                 </div>
             </el-dialog>
+            <el-dialog v-dialogDrag :title="dialogFormTitle" :close-on-click-modal="false"
+                       :visible.sync="showWorkStation" append-to-body width="800px">
+                <div class="dialog-content content-transfer">
+                    <div style="font-size: 20px;margin-bottom: 10px">
+                        选择加入工作站：
+                    </div>
+                    <el-transfer
+                        :titles="['未选工作站','已选工作站']"
+                        :props="{key: 'Ws_ID',label: 'Ws_Name'}"
+                        v-model="checkedList"
+                        :data="workStationList"
+                    ></el-transfer>
+
+                    <div style="text-align: right;margin-top: 10px">
+                        <el-button size="medium" @click="handleWorkStationBack">取消</el-button>
+                        <el-button size="medium" type="primary" :loading="saveWorkStationLoading"
+                                   @click="handleSaveWorkStation">确定
+                        </el-button>
+                    </div>
+                </div>
+            </el-dialog>
+            <el-dialog v-dialogDrag :title="dialogFormTitle" :close-on-click-modal="false"
+                       :visible.sync="showSrv" append-to-body width="800px">
+                <div class="dialog-content content-transfer">
+                    <div style="font-size: 20px;margin-bottom: 10px">
+                        选择加入服务类型：
+                    </div>
+                    <el-transfer
+                        :titles="['未选服务类型','已选服务类型']"
+                        :props="{key: 'Srvgroup_ID',label: 'Srvgroup_Name'}"
+                        v-model="checkedSrvList"
+                        :data="srvList"
+                    ></el-transfer>
+
+                    <div style="text-align: right;margin-top: 10px">
+                        <el-button size="medium" @click="handleSrvBack">取消</el-button>
+                        <el-button size="medium" type="primary" :loading="saveWorkStationLoading"
+                                   @click="handleSaveSrv">确定
+                        </el-button>
+                    </div>
+                </div>
+            </el-dialog>
         </div>
     </div>
 </template>
 
 <script>
-import {getMsdisplayList, addMsdisplay, updateMsdisplay, deleteMsdisplay,} from '@/api/setting'
+import {
+    getMsdisplayList,
+    addMsdisplay,
+    updateMsdisplay,
+    deleteMsdisplay,
+    getMsWorkStationById,
+    addMsWorkStation, getMsSrvById, addMsSrv
+} from '@/api/setting'
 
 export default {
     name: "reception",
     data() {
         return {
+            saveWorkStationLoading: false,
+            showWorkStation: false,
+            checkedList: [],
+            workStationList: [],
+            currMsId: 0,
+            saveSrvLoading: false,
+            showSrv: false,
+            checkedSrvList: [],
+            srvList: [],
             btnLoading: false,
             dataList: [],
             loading: false,
             pageIndex: 1,
-            pageSize: 5,
+            pageSize: 20,
             total: 0,
             showAddDialog: false,
             dialogFormTitle: "",
@@ -229,6 +297,104 @@ export default {
             this.showAddDialog = false
             this.btnLoading = false
         },
+        handleSetting(index, row) {
+            this.showWorkStation = true
+            this.dialogFormTitle = "设置" + row.ms_name + "工作站"
+            this.currMsId = row.id
+            getMsWorkStationById({ms_id: row.id}).then((res) => {
+                this.workStationList = JSON.parse(res.data.result)
+                console.log("this.workStationList: ", this.workStationList)
+                let checkedIdList = []
+                for (let i = 0; i < this.workStationList.length; i++) {
+                    let item = this.workStationList[i]
+                    if (item.isSelect) {
+                        checkedIdList.push(item.Ws_ID)
+                    }
+                }
+                this.checkedList = checkedIdList
+                console.log("checkedIdList: ", checkedIdList)
+            }).catch((err) => {
+                this.$errMsg(err.msg);
+            });
+        },
+        handleSettingSrv(index, row) {
+            this.showSrv = true
+            this.dialogFormTitle = "设置" + row.ms_name + "服务类型"
+            this.currMsId = row.id
+            getMsSrvById({ms_id: row.id}).then((res) => {
+                this.srvList = JSON.parse(res.data.result)
+                console.log("this.srvList: ", this.srvList)
+                let checkedIdList = []
+                for (let i = 0; i < this.srvList.length; i++) {
+                    let item = this.srvList[i]
+                    if (item.isSelect) {
+                        checkedIdList.push(item.Srvgroup_ID)
+                    }
+                }
+                this.checkedSrvList = checkedIdList
+                console.log("checkedIdList: ", checkedIdList)
+            }).catch((err) => {
+                this.$errMsg(err.msg);
+            });
+        },
+        handleWorkStationBack() {
+            this.saveWorkStationLoading = false
+            this.showWorkStation = false
+        },
+        handleSrvBack() {
+            this.saveSrvLoading = false
+            this.showSrv = false
+        },
+        handleSaveSrv() {
+            this.saveSrvLoading = true
+            let str = ''
+            if (this.checkedSrvList.length > 0) {
+                for (let i = 0; i < this.checkedSrvList.length; i++) {
+                    if (i === this.checkedSrvList.length - 1) {
+                        str = str + this.checkedSrvList[i]
+                    } else {
+                        str = str + this.checkedSrvList[i] + ','
+                    }
+                }
+            }
+            let postData = {ms_id: this.currMsId, srvgroup_ids: str, pageIndex: this.pageIndex - 1, pageSize: this.pageSize}
+            addMsSrv(postData).then((res) => {
+                    // console.log("result: ", res.data.result)
+                    // let result = JSON.parse(res.data.result)
+                    this.saveSrvLoading = false
+                    this.showSrv = false
+                }
+            ).catch((err) => {
+                this.saveWorkStationLoading = false
+                this.$errMsg(err.msg);
+            });
+
+        },
+        handleSaveWorkStation() {
+            this.saveWorkStationLoading = true
+            let str = ''
+            if (this.checkedList.length > 0) {
+                for (let i = 0; i < this.checkedList.length; i++) {
+                    if (i === this.checkedList.length - 1) {
+                        str = str + this.checkedList[i]
+                    } else {
+                        str = str + this.checkedList[i] + ','
+                    }
+                }
+            }
+            let postData = {ms_id: this.currMsId, ws_ids: str, pageIndex: this.pageIndex - 1, pageSize: this.pageSize}
+            addMsWorkStation(postData).then((res) => {
+                    // console.log("result: ", res.data.result)
+                    // let result = JSON.parse(res.data.result)
+                    this.saveWorkStationLoading = false
+                    this.showWorkStation = false
+                }
+            ).catch((err) => {
+                this.saveWorkStationLoading = false
+                this.$errMsg(err.msg);
+            });
+
+        }
     }
 
 }

@@ -44,7 +44,7 @@ module.exports = {
                 }
             },
             '/ser': {
-                target: 'http://192.168.3.4:6000/', //后端接口地址
+                target: 'http://192.168.3.4:9001/', //后端接口地址
                 // target: 'http://localhost:9060/', //后端接口地址
                 changeOrigin: true, //是否允许跨越
                 pathRewrite: {

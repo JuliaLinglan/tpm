@@ -16,10 +16,10 @@
             </div>
             <div class="panel-content">
                 <el-table
-                        class="tt-table"
-                        empty-text="没有数据"
-                        header-cell-class-name="table_header_style"
-                        :data="priorityLevels">
+                    class="tt-table"
+                    empty-text="没有数据"
+                    header-cell-class-name="table_header_style"
+                    :data="priorityLevels">
                     <el-table-column prop="level_name" label="等级"></el-table-column>
                     <el-table-column prop="psrvgroups" label="服务台优先顺序">
                         <template slot-scope="scope">
@@ -61,13 +61,13 @@
                         选择加入服务类别：
                     </div>
                     <el-transfer
-                            :titles="['未选服务类别','已选服务类别']"
-                            :props="{key: 'id',label: 'srvgroup_name'}"
-                            v-model="checkedList"
-                            :data="srvTypes"
+                        :titles="['未选服务类别','已选服务类别']"
+                        :props="{key: 'id',label: 'srvgroup_name'}"
+                        v-model="checkedList"
+                        :data="srvTypes"
                     ></el-transfer>
 
-                    <div style="text-align: right">
+                    <div style="text-align: right;margin-top: 10px">
                         <el-button size="medium" @click="handleBack">取消</el-button>
                         <el-button size="medium" type="primary" :loading="btnLoading" @click="handleSaveSrvType">确定
                         </el-button>
@@ -131,102 +131,77 @@ export default {
             }
             return str
         },
-        handleSetting(index, row) {
-            this.showSrvType = true
-            this.currLevelId = index
-            this.srvTypes = [
-                {id: 1, srvgroup_name: "111", isselect: false},
-                {id: 2, srvgroup_name: "222", isselect: true},
-                {id: 3, srvgroup_name: "333", isselect: false},
-                {id: 4, srvgroup_name: "444", isselect: true},
-                {id: 5, srvgroup_name: "555", isselect: false},
-                {id: 6, srvgroup_name: "666", isselect: false},
-                {id: 7, srvgroup_name: "777", isselect: false},
-                {id: 8, srvgroup_name: "888", isselect: false},
-                {id: 9, srvgroup_name: "999", isselect: false},
-                {id: 10, srvgroup_name: "aaaa", isselect: false}
-            ]
-            // getLevelDetail({priority_id: this.priorityId, priority_level: row.priority_level}).then((res) => {
-            //     // this.srvTypes = JSON.parse(res.data.result)
-            //     this.$nextTick(() => {
-            //         this.srvTypes = JSON.parse(res.data.result)
-            //     })
-            //     // console.log("res.data.result: ", JSON.parse(res.data.result))
-            //     // console.log("this.srvTypes1: ", this.srvTypes)
-            //
-            // }).catch((err) => {
-            //     // this.loading = false
-            // });
-        },
         handleSettingV2(index, row) {
             this.showSrvType = true
             this.dialogFormTitle = "设置第" + (index + 1) + "级服务类别"
             this.currLevelIndex = index
-            this.srvTypes = [
-                {id: 1, srvgroup_name: "111", isselect: false},
-                {id: 2, srvgroup_name: "222", isselect: true},
-                {id: 3, srvgroup_name: "333", isselect: false},
-                {id: 4, srvgroup_name: "444", isselect: true},
-                {id: 5, srvgroup_name: "555", isselect: false},
-                {id: 6, srvgroup_name: "666", isselect: false},
-                {id: 7, srvgroup_name: "777", isselect: false},
-                {id: 8, srvgroup_name: "888", isselect: false},
-                {id: 9, srvgroup_name: "999", isselect: false},
-                {id: 10, srvgroup_name: "aaaa", isselect: false}
-            ]
+            // this.srvTypes = [
+            //     {id: 1, srvgroup_name: "111", isselect: false},
+            //     {id: 2, srvgroup_name: "222", isselect: true},
+            //     {id: 3, srvgroup_name: "333", isselect: false},
+            //     {id: 4, srvgroup_name: "444", isselect: true},
+            //     {id: 5, srvgroup_name: "555", isselect: false},
+            //     {id: 6, srvgroup_name: "666", isselect: false},
+            //     {id: 7, srvgroup_name: "777", isselect: false},
+            //     {id: 8, srvgroup_name: "888", isselect: false},
+            //     {id: 9, srvgroup_name: "999", isselect: false},
+            //     {id: 10, srvgroup_name: "aaaa", isselect: false}
+            // ]
 
-            let checkedIdList = []
-            for (let i = 0; i < this.srvTypes.length; i++) {
-                let item = this.srvTypes[i]
-                if (item.isselect) {
-                    checkedIdList.push(item.id)
-
+            getLevelDetail({priority_id: this.priorityId, priority_level: row.priority_level}).then((res) => {
+                this.srvTypes = JSON.parse(res.data.result)
+                // console.log("this.srvTypes1: ", this.srvTypes)
+                let checkedIdList = []
+                for (let i = 0; i < this.srvTypes.length; i++) {
+                    let item = this.srvTypes[i]
+                    if (item.isselect) {
+                        checkedIdList.push(item.id)
+                    }
                 }
-            }
-            this.checkedList = checkedIdList
-            console.log("checkedIdList: ", checkedIdList)
-
-            // getLevelDetail({priority_id: this.priorityId, priority_level: row.priority_level}).then((res) => {
-            //     // this.srvTypes = JSON.parse(res.data.result)
-            //     this.$nextTick(() => {
-            //         this.srvTypes = JSON.parse(res.data.result)
-            //     })
-            //     // console.log("res.data.result: ", JSON.parse(res.data.result))
-            //     // console.log("this.srvTypes1: ", this.srvTypes)
-            //
-            // }).catch((err) => {
-            //     // this.loading = false
-            // });
+                this.checkedList = checkedIdList
+                console.log("checkedIdList: ", checkedIdList)
+            }).catch((err) => {
+                this.$errMsg(err.msg);
+            });
         },
         handleSaveSrvType() {
-            console.log("this.dataForm: ", this.dataForm)
-            // let str = ''
-            // if (this.checkedList.length > 0) {
-            //     for (let i = 0; i < this.checkedList.length; i++) {
-            //         if (i === this.checkedList.length - 1) {
-            //             str = str + this.checkedList[i]
-            //         } else {
-            //             str = str + this.checkedList[i] + ','
-            //         }
-            //     }
-            // }
-            // let postData = {priority_id: Number(this.priorityId), priority_level: row.priority_level, srvgroup_ids: str}
-            // addSrvTypePriority(postData).then((res) => {
-            //         let result = JSON.parse(res.data.result)
-            //         console.log("resultaaaaaaa: ", result)
-            //
-            //         // this.priorityname = result.priority_name;
-            //         // this.priorityLevels = result.priorityLevels
-            //     }
-            // ).catch((err) => {
-            //     // this.loading = false
-            // });
+            this.btnLoading = true
+            let str = ''
+            if (this.checkedList.length > 0) {
+                for (let i = 0; i < this.checkedList.length; i++) {
+                    if (i === this.checkedList.length - 1) {
+                        str = str + this.checkedList[i]
+                    } else {
+                        str = str + this.checkedList[i] + ','
+                    }
+                }
+            }
+            let postData = {
+                priority_id: Number(this.priorityId),
+                priority_level: this.currLevelIndex + 1,
+                srvgroup_ids: str
+            }
+            addSrvTypePriority(postData).then((res) => {
+                    let result = JSON.parse(res.data.result)
+                    this.priorityname = result.priority_name;
+                    let levels = result.prioritylevels
+                    for (let i = 1; i < 6; i++) {
+                        let index = levels.findIndex(item => item.priority_level === i);
+                        if (index >= 0) {
+                            this.priorityLevels[i - 1].psrvgroups = levels[index].psrvgroups
+                        }
+                    }
+                    this.btnLoading = false
+                    this.showSrvType = false
+                }
+            ).catch((err) => {
+                this.btnLoading = false
+                this.$errMsg(err.msg);
+            });
 
         },
         getPriorityDetail() {
             getPriorityById({priority_id: this.priorityId}).then((res) => {
-                    // let result = res.data.result
-                    // console.log("result: ", result)
                     let result = JSON.parse(res.data.result)
                     // console.log("result: ", result)
                     this.priorityname = result.priority_name
@@ -239,7 +214,7 @@ export default {
                     }
                 }
             ).catch((err) => {
-                // this.loading = false
+                this.$errMsg(err.msg);
             });
         },
         handleEditPriorityName() {
@@ -290,14 +265,14 @@ export default {
 </script>
 
 <style lang="scss">
-    .template-name-input {
-        width: 200px;
-        margin-left: 10px;
-        margin-right: 10px
-    }
+.template-name-input {
+    width: 200px;
+    margin-left: 10px;
+    margin-right: 10px
+}
 
-    .el-form-item__label {
-        display: contents !important;
-    }
+.el-form-item__label {
+    display: contents !important;
+}
 
 </style>

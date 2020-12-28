@@ -33,6 +33,15 @@ export function deleteMaindisplay(data, pageIndex, pageSize) {
     })
 }
 
+//获取工作站详情
+export function getWorkStationById(params) {
+    return request({url: 'ser/maindisplay/listworkstations', method: 'get', params: params})
+}
+
+export function addMdWorkStation(data) {
+    return request({url: '/ser/maindisplay/addwsids', method: 'post', data: data})
+}
+
 /**
  * 服务台
  * @param params
@@ -65,6 +74,23 @@ export function deleteMsdisplay(data, pageIndex, pageSize) {
         data: data
     })
 }
+//获取工作站详情
+export function getMsWorkStationById(params) {
+    return request({url: 'ser/msdisplay/listworkstations', method: 'get', params: params})
+}
+
+export function addMsWorkStation(data) {
+    return request({url: '/ser/msdisplay/addwsids', method: 'post', data: data})
+}
+//获取服务台详情
+export function getMsSrvById(params) {
+    return request({url: 'ser/msdisplay/listsrvgroups', method: 'get', params: params})
+}
+
+export function addMsSrv(data) {
+    return request({url: '/ser/msdisplay/addsrvgroups', method: 'post', data: data})
+}
+
 
 /**
  * 系统功能设置

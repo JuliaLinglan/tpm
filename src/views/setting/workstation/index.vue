@@ -112,7 +112,7 @@ export default {
             dataList: [],
             loading: false,
             pageIndex: 1,
-            pageSize: 5,
+            pageSize: 20,
             total: 0,
             showAddDialog: false,
             dialogFormTitle: "",

@@ -135,7 +135,7 @@ export default {
             dataList: [],
             loading: false,
             pageIndex: 0,
-            pageSize: 5,
+            pageSize: 20,
             total: 0,
         }
     },

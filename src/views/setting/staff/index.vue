@@ -71,12 +71,13 @@
                                        :show-file-list="false" :auto-upload="false" :on-change="beforeAvatarUpload">
                                 <el-tooltip content="员工头像" placement="top">
                                     <img v-if="imageBase64" :src="imageBase64" class="avatar">
+                                    <!--                                    <img v-if="isEditStaffId" :src="picBaseUrl+dataForm.staff_picpath" class="avatar">-->
                                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                                 </el-tooltip>
                             </el-upload>
                         </el-form-item>
                         <el-form-item label="员工编号：" prop="staff_code">
-                            <el-input v-model="dataForm.staff_code"></el-input>
+                            <el-input v-model="dataForm.staff_code" :disabled="isEditStaffId"></el-input>
                         </el-form-item>
                         <el-form-item label="员工姓名：" prop="staff_name">
                             <el-input v-model="dataForm.staff_name"></el-input>
@@ -118,13 +119,14 @@ export default {
     data() {
         return {
             dialogVisible: true,
-            picBaseUrl: "http://192.168.3.4:6000/pictures/",
+            isEditStaffId: false,
+            picBaseUrl: "http://192.168.3.4:9001/pictures/",
             imageBase64: '',
             btnLoading: false,
             dataList: [],
             loading: false,
             pageIndex: 1,
-            pageSize: 5,
+            pageSize: 20,
             total: 0,
             showAddDialog: false,
             dialogFormTitle: "",
@@ -179,11 +181,15 @@ export default {
 
         handleAdd() {
             this.dialogFormTitle = "添加员工信息"
+            this.isEditStaffId = false
             this.showAddDialog = true
             this.dataForm = {}
         },
         handleUpdate(index, row) {
             this.dialogFormTitle = "编辑员工信息"
+            this.isEditStaffId = true
+            row.base64pic = this.imgUrlToBase64(this.picBaseUrl + row.staff_picpath)
+            console.log("row:", row)
             Object.assign(this.dataForm, row);
             this.showAddDialog = true
         },
@@ -230,6 +236,7 @@ export default {
                         this.btnLoading = false
                     });
                 } else {
+                    postData.base64pic = this.imageBase64
                     updateStaff(postData, this.pageIndex - 1, this.pageSize)
                         .then((res) => {
                             let result = res.data.result
@@ -250,6 +257,7 @@ export default {
             this.btnLoading = false
         },
         beforeAvatarUpload(file) {
+            console.log("file: ", file)
             let imgType = (file.raw.type === 'image/jpeg' || file.raw.type === 'image/jpg' || file.raw.type === 'image/png');
             const isLt2M = file.size / 1024 / 1024 < 2;
 
@@ -269,6 +277,26 @@ export default {
                 this.imageBase64 = fileBase64 //为img的src赋值看看是否为上传的图片
             }
         },
+        imgUrlToBase64(imgUrl) {
+            // 一定要设置为let，不然图片不显示
+            const image = new Image();
+            // 解决跨域问题
+            image.setAttribute('crossOrigin', 'anonymous');
+            image.setAttribute('Content-Type', 'application/x-www-form-urlencoded');
+            image.src = imgUrl
+            // image.onload为异步加载
+            image.onload = () => {
+                let canvas = document.createElement('canvas');
+                canvas.width = image.width;
+                canvas.height = image.height;
+                let context = canvas.getContext('2d');
+                context.drawImage(image, 0, 0, image.width, image.height);
+                let quality = 0.8;
+                // 这里的dataurl就是base64类型
+                // 使用toDataUrl将图片转换成jpeg的格式,不要把图片压缩成png，因为压缩成png后base64的字符串可能比不转换前的长！
+                this.imageBase64 = canvas.toDataURL('image/png', quality);
+            }
+        }
     }
 }
 </script>

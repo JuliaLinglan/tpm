@@ -13,10 +13,10 @@
                 </el-form>
 
                 <el-table
-                        class="tt-table"
-                        empty-text="没有数据"
-                        header-cell-class-name="table_header_style"
-                        :data="dataList">
+                    class="tt-table"
+                    empty-text="没有数据"
+                    header-cell-class-name="table_header_style"
+                    :data="dataList">
                     <el-table-column prop="md_name" label="设备名称"></el-table-column>
                     <el-table-column prop="md_ip" label="设备IP"></el-table-column>
                     <el-table-column width="90px" prop="md_type" label="设备类型">
@@ -38,9 +38,9 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="md_dialog_time" label="弹框显示时间（秒）"></el-table-column>
-                    <el-table-column prop="md_scroll_txt" label="滚动信息" :show-overflow-tooltip="true"></el-table-column>
                     <el-table-column prop="md_queue_view" label="主显示设备对应的显示视图"></el-table-column>
-                    <el-table-column width="150px" label="操作">
+                    <el-table-column prop="md_scroll_txt" label="滚动信息" :show-overflow-tooltip="true"></el-table-column>
+                    <el-table-column width="220px" label="操作">
                         <template slot-scope="scope">
                             <el-button size="mini" @click="handleSetting(scope.$index, scope.row)">设置</el-button>
                             <el-button size="mini" type="primary"
@@ -136,15 +136,16 @@
                         选择加入工作站：
                     </div>
                     <el-transfer
-                            :titles="['未选工作站','已选工作站']"
-                            :props="{key: 'id',label: 'ws_name'}"
-                            v-model="checkedList"
-                            :data="workStationList"
+                        :titles="['未选工作站','已选工作站']"
+                        :props="{key: 'Ws_ID',label: 'Ws_Name'}"
+                        v-model="checkedList"
+                        :data="workStationList"
                     ></el-transfer>
 
-                    <div style="text-align: right">
-                        <el-button size="medium" @click="handleBack">取消</el-button>
-                        <el-button size="medium" type="primary" :loading="btnLoading" @click="handleSaveWorkStation">确定
+                    <div style="text-align: right;margin-top: 10px">
+                        <el-button size="medium" @click="handleWorkStationBack">取消</el-button>
+                        <el-button size="medium" type="primary" :loading="saveWorkStationLoading"
+                                   @click="handleSaveWorkStation">确定
                         </el-button>
                     </div>
                 </div>
@@ -155,7 +156,14 @@
 </template>
 
 <script>
-import {getMaindisplayList, addMaindisplay, updateMaindisplay, deleteMaindisplay} from '../../../api/setting'
+import {
+    getMaindisplayList,
+    addMaindisplay,
+    updateMaindisplay,
+    deleteMaindisplay,
+    getWorkStationById,
+    addMdWorkStation,
+} from '../../../api/setting'
 
 export default {
     name: "maindisplaydevice",
@@ -163,14 +171,15 @@ export default {
     data() {
         return {
             btnLoading: false,
+            saveWorkStationLoading: false,
             showWorkStation: false,
             checkedList: [],
             workStationList: [],
-            currMdIndex:0,
+            currMdId: 0,
             dataList: [],
             loading: false,
             pageIndex: 1,
-            pageSize: 5,
+            pageSize: 20,
             total: 0,
             showAddDialog: false,
             dialogFormTitle: "",
@@ -292,34 +301,66 @@ export default {
             this.showAddDialog = false
             this.btnLoading = false
         },
-        handleSettingV2(index, row) {
+        handleWorkStationBack() {
+            this.saveWorkStationLoading = false
+            this.showWorkStation = false
+        },
+        handleSetting(index, row) {
             this.showWorkStation = true
             this.dialogFormTitle = "设置" + row.md_name + "工作站"
-            this.currMdIndex = index
-            this.workStationList = [
-                {id: 1, ws_name: "111", isselect: false},
-                {id: 2, ws_name: "222", isselect: true},
-                {id: 3, ws_name: "333", isselect: false},
-                {id: 4, ws_name: "444", isselect: true},
-                {id: 5, ws_name: "555", isselect: false},
-                {id: 6, ws_name: "666", isselect: false},
-                {id: 7, ws_name: "777", isselect: false},
-                {id: 8, ws_name: "888", isselect: false},
-                {id: 9, ws_name: "999", isselect: false},
-                {id: 10, ws_name: "aaaa", isselect: false}
-            ]
+            this.currMdId = row.id
+            // this.workStationList = [
+            //     {id: 1, ws_name: "111", isselect: false},
+            //     {id: 2, ws_name: "222", isselect: true},
+            //     {id: 3, ws_name: "333", isselect: false},
+            //     {id: 4, ws_name: "444", isselect: true},
+            //     {id: 5, ws_name: "555", isselect: false},
+            //     {id: 6, ws_name: "666", isselect: false},
+            //     {id: 7, ws_name: "777", isselect: false},
+            //     {id: 8, ws_name: "888", isselect: false},
+            //     {id: 9, ws_name: "999", isselect: false},
+            //     {id: 10, ws_name: "aaaa", isselect: false}
+            // ]
 
-            let checkedIdList = []
-            for (let i = 0; i < this.workStationList.length; i++) {
-                let item = this.workStationList[i]
-                if (item.isselect) {
-                    checkedIdList.push(item.id)
+            getWorkStationById({md_id: row.id}).then((res) => {
+                this.workStationList = JSON.parse(res.data.result)
+                console.log("this.workStationList: ", this.workStationList)
+                let checkedIdList = []
+                for (let i = 0; i < this.workStationList.length; i++) {
+                    let item = this.workStationList[i]
+                    if (item.isSelect) {
+                        checkedIdList.push(item.Ws_ID)
+                    }
                 }
-            }
-            this.checkedList = checkedIdList
-            console.log("checkedIdList: ", checkedIdList)
+                this.checkedList = checkedIdList
+                console.log("checkedIdList: ", checkedIdList)
+            }).catch((err) => {
+                this.$errMsg(err.msg);
+            });
         },
         handleSaveWorkStation() {
+            this.saveWorkStationLoading = true
+            let str = ''
+            if (this.checkedList.length > 0) {
+                for (let i = 0; i < this.checkedList.length; i++) {
+                    if (i === this.checkedList.length - 1) {
+                        str = str + this.checkedList[i]
+                    } else {
+                        str = str + this.checkedList[i] + ','
+                    }
+                }
+            }
+            let postData = {md_id: this.currMdId, ws_ids: str, pageIndex: this.pageIndex - 1, pageSize: this.pageSize}
+            addMdWorkStation(postData).then((res) => {
+                    // console.log("result: ", res.data.result)
+                    // let result = JSON.parse(res.data.result)
+                    this.saveWorkStationLoading = false
+                    this.showWorkStation = false
+                }
+            ).catch((err) => {
+                this.saveWorkStationLoading = false
+                this.$errMsg(err.msg);
+            });
 
         }
     }
@@ -327,13 +368,13 @@ export default {
 </script>
 
 <style lang="scss">
-    .el-tooltip__popper {
-        max-width: 300px;
-        padding: 16px;
-        background: #fff !important;
-        color: #666 !important;
-        box-shadow: 1px 1px 5px 1px #D3D3D6;
-    }
+.el-tooltip__popper {
+    max-width: 300px;
+    padding: 16px;
+    background: #fff !important;
+    color: #666 !important;
+    box-shadow: 1px 1px 5px 1px #D3D3D6;
+}
 </style>
 
 

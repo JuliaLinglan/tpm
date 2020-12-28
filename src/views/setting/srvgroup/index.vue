@@ -19,7 +19,7 @@
                     :data="dataList">
                     <el-table-column prop="srvgroup_group" label="服务类型组"></el-table-column>
                     <el-table-column prop="srvgroup_no" label="第三方的类型ID"></el-table-column>
-                    <el-table-column prop="srvgroup_name" label="类型名称"></el-table-column>
+                    <el-table-column prop="srvgroup_name" label="类型名称" :show-overflow-tooltip="true"></el-table-column>
                     <el-table-column prop="srvgroup_letter" label="字母标识"></el-table-column>
                     <el-table-column prop="srvgroup_start_num" label="开始号码"></el-table-column>
                     <el-table-column prop="srvgroup_end_num" label="结束号码"></el-table-column>
@@ -126,7 +126,7 @@ export default {
             dataList: [],
             loading: false,
             pageIndex: 1,
-            pageSize: 5,
+            pageSize: 20,
             total: 0,
             showAddDialog: false,
             dialogFormTitle: "",

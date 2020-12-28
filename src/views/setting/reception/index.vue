@@ -12,10 +12,10 @@
                     </el-form-item>
                 </el-form>
                 <el-table
-                    class="tt-table"
-                    empty-text="没有数据"
-                    header-cell-class-name="table_header_style"
-                    :data="dataList">
+                        class="tt-table"
+                        empty-text="没有数据"
+                        header-cell-class-name="table_header_style"
+                        :data="dataList">
                     <el-table-column prop="ms_name" label="服务台名称"></el-table-column>
                     <el-table-column prop="ms_ip" label="服务台IP"></el-table-column>
                     <el-table-column prop="ms_amstarttime" label="上午开始取票时间"></el-table-column>
@@ -52,17 +52,16 @@
                                 </el-form-item>
                                 <el-form-item label="上午开始取票时间：" prop="ms_amstarttime">
                                     <el-time-picker
-                                        v-model="dataForm.ms_amstarttime"
-                                        value-format="HH:mm:ss"
-                                        value="08:00:00"
-                                        placeholder="任意时间点">
+                                            v-model="dataForm.ms_amstarttime"
+                                            value-format="HH:mm:ss"
+                                            placeholder="任意时间点">
                                     </el-time-picker>
                                 </el-form-item>
                                 <el-form-item label="下午开始取票时间：" prop="ms_pmstarttime">
                                     <el-time-picker
-                                        v-model="dataForm.ms_pmstarttime"
-                                        value-format="HH:mm:ss"
-                                        placeholder="任意时间点">
+                                            v-model="dataForm.ms_pmstarttime"
+                                            value-format="HH:mm:ss"
+                                            placeholder="任意时间点">
                                     </el-time-picker>
                                 </el-form-item>
 
@@ -74,16 +73,16 @@
 
                                 <el-form-item label="上午结束取票时间：" prop="ms_amendtime">
                                     <el-time-picker
-                                        v-model="dataForm.ms_amendtime"
-                                        value-format="HH:mm:ss"
-                                        placeholder="任意时间点">
+                                            v-model="dataForm.ms_amendtime"
+                                            value-format="HH:mm:ss"
+                                            placeholder="任意时间点">
                                     </el-time-picker>
                                 </el-form-item>
                                 <el-form-item label="下午结束取票时间：" prop="ms_pmendtime">
                                     <el-time-picker
-                                        v-model="dataForm.ms_pmendtime"
-                                        value-format="HH:mm:ss"
-                                        placeholder="任意时间点">
+                                            v-model="dataForm.ms_pmendtime"
+                                            value-format="HH:mm:ss"
+                                            placeholder="任意时间点">
                                     </el-time-picker>
                                 </el-form-item>
                             </el-col>
@@ -157,6 +156,10 @@ export default {
             this.showAddDialog = true
             this.dataForm = {}
             this.dataForm.id = 0
+            this.dataForm.ms_amstarttime = '08:30:00'
+            this.dataForm.ms_amendtime = '11:30:00'
+            this.dataForm.ms_pmstarttime = '13:00:00'
+            this.dataForm.ms_pmendtime = '16:30:00'
         },
         handleUpdate(index, row) {
             this.dialogFormTitle = "编辑服务台信息"

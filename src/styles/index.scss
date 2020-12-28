@@ -1,7 +1,6 @@
 @import './variables.scss';
 @import './sidebar.scss';
 @import './common.scss';
-@import './dialog-detail.scss';
 body {
   margin: 0;
   padding: 0;
@@ -204,9 +203,26 @@ div:focus {
   padding-bottom:10px !important;
 }
 
-dialog-content{
+.dialog-content{
   background-color:white;
   margin-top:6px;
   border:1px solid white;
   border-radius:5px;
 }
+//穿梭框宽度
+.content-transfer {
+  .el-transfer-panel {
+    width: 330px;
+    .el-transfer-panel__item{
+      display: block !important;
+    }
+  }
+}
+.textarea {
+  min-height: 50px;
+
+  textarea.el-textarea__inner {
+    min-height: 50px !important;
+  }
+}
+

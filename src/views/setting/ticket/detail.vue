@@ -145,10 +145,13 @@
                 <div class="template-container">
                     <div style="text-align: center;margin-bottom: 10px;font-size: 18px">显示</div>
                     <!--<p style="font-size: 20px;text-align: center;background-color: #4AB7BD">this iddddddddddd</p>-->
-                    <div v-for="(item,index) in ticketDataList" :key="index" style="background-color: #ffffff">
-                        <!--                        {{ item }}-->
-                        <p :style="{textAlign:item.textAlign,fontSize:item.textSize+'px',margin:'0px',backgroundColor:item.isClicked?'#00ffff':'#ffffff'}"
-                           v-if="item.isChoose===true">{{ item.textContent }}</p>
+                    <div id="page">
+                        <div v-for="(item,index) in ticketDataList" :key="index" style="background-color: #ffffff">
+                            <!--                        {{ item }}-->
+                            <p :style="{textAlign:item.textAlign,fontSize:item.textSize+'px',margin:'0px',backgroundColor:item.isClicked?'#00ffff':'#ffffff'}"
+                               v-if="item.isChoose===true"><span :id="'content' + index">{{ item.textContent }}</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div class="property-container">
@@ -171,6 +174,9 @@
                                     <el-option label="居中" value="center"></el-option>
                                     <el-option label="右对齐" value="right"></el-option>
                                 </el-select>
+                                <el-button @click="submitStyle" type="primary" size="medium"
+                                           style="float: right;margin-top: 10px">提交
+                                </el-button>
                             </el-form-item>
                         </el-form>
                     </div>
@@ -223,11 +229,12 @@ export default {
                 textSize: [{required: true, message: "值不能为空", trigger: 'blur'}],
                 textAlign: [{required: true, message: "值不能为空", trigger: 'blur'}],
             },
+            currLineIndex: 0
         }
     },
     mounted() {
         this.initData()
-        console.log("this.ticketDataList: ", this.ticketDataList)
+        // console.log("this.ticketDataList: ", this.ticketDataList)
 
     },
     methods: {
@@ -235,6 +242,7 @@ export default {
 
         },
         handleAddContent(index) {
+            this.currLineIndex = index
             for (let i = 0; i < this.ticketDataList.length; i++) {
                 this.ticketDataList[i].isClicked = false
             }
@@ -261,63 +269,95 @@ export default {
             this.ticketDataList[index].isClicked = true
             this.$set(this.ticketDataList, index, item)
         },
+        submitStyle() {
+            let div = document.getElementById('page');
+            console.log("div: ", div)
+
+            let clientHeight = div.clientHeight;
+            let clientWidth = div.clientWidth;
+            console.log("clientWidth: ", clientWidth)
+            console.log("clientHeight: ", clientHeight)
+            let offsetHeight = div.offsetHeight;
+            let offsetWidth = div.offsetWidth;
+            console.log("offsetHeight: ", offsetHeight)
+            console.log("offsetWidth: ", offsetWidth)
+            let offsetLeft = div.offsetLeft;
+            let offsetTop = div.offsetTop;
+            console.log("offsetLeft: ", offsetLeft)
+            console.log("offsetTop: ", offsetTop)
+
+            let span = document.getElementById('content' + this.currLineIndex);
+            let spanoffsetHeight = span.offsetHeight;
+            let spanoffsetWidth = span.offsetWidth;
+            let spanoffsetLeft = span.offsetLeft;
+            let spanoffsetTop = span.offsetTop;
+            console.log("spanoffsetHeight: ", spanoffsetHeight)
+            console.log("spanoffsetWidth: ", spanoffsetWidth)
+            console.log("spanoffsetLeft: ", spanoffsetLeft)
+            console.log("spanoffsetTop: ", spanoffsetTop)
+
+            // var clientHeight = div.clientHeight;
+            //
+            // var clientWidth = div.clientWidth;
+
+        },
     }
 }
 </script>
 <style lang="scss">
-.relative {
-    position: relative;
-    margin-right: 10px;
-}
+    .relative {
+        position: relative;
+        margin-right: 10px;
+    }
 
-.absolute {
-    position: absolute;
-    top: -13px;
-    right: -1px;
-}
+    .absolute {
+        position: absolute;
+        top: -13px;
+        right: -1px;
+    }
 
-.component-box {
-    width: 35%;
-    border: 3px dotted #3A71A8;
-    padding: 10px 30px;
-    margin: 20px;
-}
+    .component-box {
+        width: 35%;
+        border: 3px dotted #3A71A8;
+        padding: 10px 30px;
+        margin: 20px;
+    }
 
-.component-title {
-    margin-top: 20px;
-}
+    .component-title {
+        margin-top: 20px;
+    }
 
-.template-name-input {
-    width: 200px;
-    margin-left: 10px;
-    margin-right: 10px
-}
+    .template-name-input {
+        width: 200px;
+        margin-left: 10px;
+        margin-right: 10px
+    }
 
-.template-container {
-    width: 30%;
-    border: 3px dotted #3A71A8;
-    padding: 10px 30px;
-    margin: 20px 40px;
-    background-color: #f2f7fb;
-}
+    .template-container {
+        width: 30%;
+        border: 3px dotted #3A71A8;
+        padding: 10px 30px;
+        margin: 20px 40px;
+        background-color: #f2f7fb;
+    }
 
-.property-container {
-    height: 300px;
-    width: 350px;
-    border: 1px solid #3A71A8;
-    margin: 20px 40px;
-}
+    .property-container {
+        height: 300px;
+        width: 350px;
+        border: 1px solid #3A71A8;
+        margin: 20px 40px;
+    }
 
-.tips {
-    margin-bottom: 10px
-}
+    .tips {
+        margin-bottom: 10px
+    }
 
-.el-divider.el-divider--horizontal {
-    margin: 10px 0;
-}
+    .el-divider.el-divider--horizontal {
+        margin: 10px 0;
+    }
 
-.svg-size {
-    width: 12px;
-    height: 12px;
-}
+    .svg-size {
+        width: 12px;
+        height: 12px;
+    }
 </style>
